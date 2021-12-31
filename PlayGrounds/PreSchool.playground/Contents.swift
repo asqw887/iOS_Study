@@ -146,4 +146,161 @@ convertToInches(fromMeter: 0.4)
 
 
 
+// 연산자 operator
+//    +, -, *, /, &&, ||, ??
 //
+//    기본 자료형을 계산하기 위해 사용
+//    특별히 String 클래스는 + 연산자가 이어붙이는 기능.
+//    boolean 제외
+
+
+// 단항 연산자
+//    + 와 -
+//    + 는 “변수 * (1)”을 의미하고 - 는 “변수 * (-1)”을 의미한다.
+
+var intValue = -10
+var result = +intValue
+var minus = -intValue
+
+// !
+// Bool 타입에 대해 결과값이 반대로 됨
+
+var flag = true
+print(flag)
+print(!flag)
+
+// 연산자 계산순서
+
+//. 구분           연산자.    우선순위
+//단항 연산자    +, -, !, ~    1
+//산술 연산자    *, / , %      2
+//산술 연산자    +, -          3
+
+
+// 논리 연산자
+// && : Conditional AND - 둘다 참일때
+// || : Conditional OR - 둘 중에 하나라도 참일 때
+
+
+// 삼항 연산자
+// 변수 = (boolean조건식) ? 참일때값 : 거짓일때값
+
+let point = 90
+var doBlindDateFlag = (point >= 80) ? true : false
+
+
+
+// 복잡한 데이터 구조
+// - 한꺼번에 많은 값을 담아보자
+
+// 배열 ( array )
+// - 동일한 데이터 타입을 연속해서 담아놓고 순서대로 접근하는 콜렉션
+
+var ageArray = [10,20,30,40,50]
+print(ageArray[0])
+
+// 사전 ( dictionary )
+// - 동일한 데이터 타입을 키값과 함께 담아놓고 키값으로 접근하는 콜렉션
+
+var gradeDic = ["a" : 90 , "b": 80, "c": 70]
+print(gradeDic["a"] ?? 0)
+
+
+// 집합 (set)
+// - 동일한 데이터 타이블 순서없이 담아놓고 포함되어 있는지 확인하는 콜렉션
+
+var aSet: Set = [11,12,13]
+aSet.contains(12)
+
+// 튜플 (tuples)
+// - 여러 값을 한꺼번에 묶어서 사용하는 타입
+
+let http404Error = (404, "Not Found")
+// http404Error is of type (Int, String), and equals (404, "Not Found")
+
+
+let (statusCode, statusMessage) = http404Error
+print("The status code is \(statusCode)")
+// Prints "The status code is 404"
+print("The status message is \(statusMessage)")
+// Prints "The status message is Not Found"
+
+print("The status code is \(http404Error.0)")
+// Prints "The status code is 404"
+print("The status message is \(http404Error.1)")
+// Prints "The status message is Not Found"
+
+let http200Status = (statusCode: 200, description: "OK")
+
+
+// 여러 데이터를 한꺼번에 struct
+// - 값을 저장하기 위한 프러퍼티property 선언
+// - 기능을 제공하기 위한 메서드method 선언
+// - 서브스크립트로 접근할 수 있는 문법 지원
+// - 초기 상태를 위한 초기화 메서드 제공
+
+
+struct SomeStructure {
+    // 정의하는 부분
+}
+
+struct Resolution {
+    var width = 0
+    var height = 0
+}
+
+let someResolution = Resolution()
+someResolution.width
+
+let vga = Resolution(width: 640, height: 480)
+
+
+// 연습문제
+
+//미션1. Rectangle
+//Playground로 Rectangle struct를 만들어보세요.
+//
+//Int 형 leftTopX, leftTopY 변수를 추가하세요.
+//
+//Int 형 rightBottomX, rightBottomY 변수를 추가하세요.
+//
+//4개의 꼭지점을 출력하는 printRect() 메서드를 선언하세요.
+
+
+
+struct Rectangle {
+    
+    var leftTopX: Int
+    var leftTopY: Int
+    
+    var rightBottomX: Int
+    var rightBottomY: Int
+    
+    func printRect() {
+        print(" A  ( X : \(self.leftTopX), Y : \(self.leftTopY) ) ")
+        print(" B  ( X : \(self.rightBottomX), Y : \(self.leftTopY) ) ")
+        print(" C  ( X : \(self.leftTopX), Y : \(self.rightBottomY) ) ")
+        print(" D  ( X : \(self.rightBottomX), Y : \(self.rightBottomY) ) ")
+        
+    }
+    
+}
+
+//
+//미션2. 호출하기
+//아래에서 Rectangle struct를 rect 변수로 선언하고
+//
+//기본 제공하는 leftTopX, leftTopY, rightBottomX, rightBottomY 모두 초기화하는 메서드로 값을 지정하세요.
+//
+//printRect() 메서드를 호출해서 꼭지점 좌표를 출력하세요.
+
+
+let rect = Rectangle(leftTopX: 5, leftTopY: 11, rightBottomX: 15, rightBottomY: 4)
+rect.printRect()
+
+
+
+//미션3. printArea()
+//사각형의 면적을 계산해서 출력하는 printArea() 메서드를 추가하세요.
+//
+//아래에서 printArea() 메서드를 호출하세요.
