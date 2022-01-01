@@ -414,3 +414,118 @@ var pointB = MyPoint(myX: 15, myY: 12.2)
 pointA.getDistanceTo(toPoint: pointB)
 
 
+
+
+// 연습문제 3
+
+//미션1. MyPoint로 바꾸기
+//이전에 만든 Rectangle struct를 MyPoint 구조체를 사용하도록 개선해봅시다.
+//
+//Float leftTop-X, -Y 대신 MyPoint leftTop으로
+//
+//Float rightBottom-X, -Y 대신 MyPoint rightBottom 으로 대체하고
+//
+//기본 생성자에서 각 좌표의 초기값을 (0,0) 으로 설정하세요.
+//
+//rect 테스트했던 메서드를 그대로 실행해보세요.
+//
+//안되는 부분을 수정해보세요.
+
+
+
+struct PointRectangle {
+    
+//    var leftTopX: Float
+//    var leftTopY: Float
+    var leftTop: MyPoint
+    
+//    var rightBottomX: Float
+//    var rightBottomY: Float
+    var rightBottom: MyPoint
+    
+    var width: Float {
+        self.rightBottom.myX - self.leftTop.myX
+    }
+    
+    var height: Float {
+        self.leftTop.myY - self.rightBottom.myY
+    }
+    
+    
+    init() {
+        self.leftTop = MyPoint(myX: 0, myY: 0)
+        self.rightBottom = MyPoint(myX: 0, myY: 0)
+    }
+    
+    init(point: MyPoint, width: Float, height: Float){
+        
+        leftTop = MyPoint(myX: point.myX, myY: point.myY)
+        rightBottom = MyPoint(myX: point.myX + width, myY: point.myY - height)
+        
+        
+    }
+    
+    func printRect() {
+        print(" A  ( X : \(self.leftTop.myX), Y : \(self.leftTop.myY) ) ")
+        print(" B  ( X : \(self.rightBottom.myX), Y : \(self.leftTop.myY) ) ")
+        print(" C  ( X : \(self.leftTop.myX), Y : \(self.rightBottom.myY) ) ")
+        print(" D  ( X : \(self.rightBottom.myX), Y : \(self.rightBottom.myY) ) ")
+        
+    }
+    
+    func printArea() {
+        let area = width * height
+        print("사각형의 면적 : \(area)")
+    }
+    
+    func printCenter() {
+        let centerX = ( self.rightBottom.myX + self.leftTop.myX ) / 2
+        let centerY = (self.leftTop.myY + self.rightBottom.myY) / 2
+        print("중점 X : \(centerX) Y : \(centerY)")
+    }
+    
+    // 원하는 delta 값만큼 이동하는 메소드
+    mutating func moveTo(delta: MyPoint){
+        leftTop.setX(x: leftTop.myX + delta.myX)
+        leftTop.setY(y: leftTop.myY + delta.myY)
+        
+        rightBottom.setX(x: rightBottom.myX + delta.myX)
+        rightBottom.setY(y: rightBottom.myY + delta.myY)
+        
+    }
+    
+}
+
+
+let rect3 = PointRectangle()
+rect3.printRect()
+rect3.printCenter()
+rect3.printArea()
+
+
+
+//
+//미션2. printPoints() 구현하기
+//추가 생성자로 MyPoint형 원점(x,y) 좌표와
+//길이 Float width 와 높이 Float height 를 넘겨
+//사각형을 만드는 메서드를 만드세요.
+//
+//원점에 해당하는 MyPoint 인스턴스 (5,5)를 추가하고
+//추가 생성자에 길이는 5f, 10f 넘겨 새로운 사각형 rectB 객체를 생성하세요.
+//
+//rectB.printPoint()를 호출해서 좌표를 출력하세요.
+
+
+let point2 = MyPoint(myX: 5, myY: 5)
+var rectB = PointRectangle(point: point2, width: 5, height: 10)
+rectB.printRect()
+
+
+
+//미션3. moveTo() 구현하기
+//이전에 만든 Rectangle 클래스에 원하는 delta 값만큼 위치 이동하는 moveTo(delta: MyPoint)메서드를 추가하세요.
+//
+//rectB.moveTo(delta: (-3f, 1.5f)) 메서드를 호출하고 이동한 사각형 좌표를 printRect()로 확인하세요.
+
+rectB.moveTo(delta: MyPoint(myX: -3, myY: 1.5))
+rectB.printRect()
