@@ -342,3 +342,75 @@ rect2.printRect()
 rect2.printCenter()
 
 
+
+
+// 연습문제 2
+
+
+//미션1. MyPoint
+//MyPoint struct를 만들어보세요.
+//
+//Float 형 myX, myY 변수를 추가하세요.
+//
+//(x,y)형태로 좌표를 출력하는 printPoint() 메서드를 만드세요.
+//
+//MyPoint struct 인스턴스를 pointA로 선언하고
+//
+//초기화 메서드로 (2.5f,15.8f)값을 넘기고
+//
+//printPoint()를 호출해서 좌표를 출력하세요.
+
+struct MyPoint{
+    
+    var myX: Float
+    var myY: Float
+    
+    func printPoint() {
+        print("(\(self.myX),\(self.myY))")
+    }
+    
+    mutating func setX(x: Float){
+        self.myX = x
+    }
+    
+    mutating func setY(y: Float){
+        self.myY = y
+    }
+    
+    
+    // 다른 점과의 거리를 계산
+    // sqrt(Float) -> 제곱근 구해주는 함수
+    
+    func getDistanceTo(toPoint: MyPoint) -> Float {
+        let x = toPoint.myX - self.myX
+        let y = toPoint.myY - self.myY
+        
+        let distance = sqrt(pow(x,2) + pow(y, 2))
+        return distance
+        
+    }
+    
+}
+
+var pointA = MyPoint(myX: 2.5, myY: 15.8)
+pointA.printPoint()
+
+
+//미션2. 메소드 추가하기
+//setX(x : Float) 메서드와 setY(y: Float) 메서드를 추가하세요.
+//
+//setX는 myX값을 x로 바꾸고, setY는 myY값을 y로 바꾸세요.
+//
+//setX(x:15.2)와 setY(y:7.4)를 호출하세요.
+//
+//직접 print(“pointA=( )”) 형태로 x와 y 값을 가져와서 출력하세요.
+
+pointA.setX(x: 15.2)
+pointA.setY(y: 7.4)
+
+print("pointA = (\(pointA.myX),\(pointA.myY))")
+
+var pointB = MyPoint(myX: 15, myY: 12.2)
+pointA.getDistanceTo(toPoint: pointB)
+
+
