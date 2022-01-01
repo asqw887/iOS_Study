@@ -529,3 +529,164 @@ rectB.printRect()
 
 rectB.moveTo(delta: MyPoint(myX: -3, myY: 1.5))
 rectB.printRect()
+
+
+
+
+// 프로그램 흐름 제어하기
+
+// 연습문제
+// point를 넘기면 학점 “A”, “B”, “C”, “D”, “F”을 리턴하세요.
+
+func whatIsGrade(point: Int) -> Character {
+    
+    if point >= 90 {
+        return "A"
+    }
+    else if point >= 80 {
+        return "B"
+    }
+    else if point >= 70 {
+        return "C"
+    }
+    else if point >= 60{
+        return "D"
+    }
+    else {
+        return "F"
+    }
+    
+}
+
+
+// switch - case
+
+let someCharacter: Character = "z"
+switch someCharacter {
+case "a":
+    print("The first letter of the alphabet")
+case "z":
+    print("The last letter of the alphabet")
+default:
+    print("Some other character")
+}
+// Prints "The last letter of the alphabet"
+
+let approximateCount = 62
+let countedThings = "moons orbiting Saturn"
+var naturalCount: String
+switch approximateCount {
+case 0:
+    naturalCount = "no"
+case 1..<5:
+    naturalCount = "a few"
+case 5..<12:
+    naturalCount = "several"
+case 12..<100:
+    naturalCount = "dozens of"
+case 100..<1000:
+    naturalCount = "hundreds of"
+default:
+    naturalCount = "many"
+}
+print("There are \(naturalCount) \(countedThings).")
+// Prints "There are dozens of moons orbiting Saturn."
+
+let somePoint = (1, 1)
+switch somePoint {
+case (0, 0):
+    print("(0, 0) is at the origin")
+case (_, 0):
+    print("(\(somePoint.0), 0) is on the x-axis")
+case (0, _):
+    print("(0, \(somePoint.1)) is on the y-axis")
+case (-2...2, -2...2):
+    print("(\(somePoint.0), \(somePoint.1)) is inside the box")
+default:
+    print("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+}
+// Prints "(1, 1) is inside the box"
+
+
+// 반복작업 for
+
+for index in 1...5 {
+    print("\(index) 곱하기 5 는 \(index * 5)")
+}
+
+
+let base = 3
+let power = 10
+var answer = 1
+for _ in 1...power {
+    answer *= base
+}
+print("\(base) to the power of \(power) is \(answer)")
+// Prints "3 to the power of 10 is 59049"
+
+let names = ["Honux", "JK", "Crong", "Anonymous"]
+for name in names {
+    print("Hello, master \(name)!")
+}
+//Hello, master Honux!
+//Hello, master JK!
+//Hello, master Crong!
+//Hello, master Anonymous!
+
+
+// 연습문제
+// 구구단 함수를 반복문을 활용해서 만들어보세요
+
+func gugu(dan: Int) {
+    // dan 값에 1 ~ 9 까지 곱해서 출력하세요
+    
+    for i in 1...9{
+        print("\(dan) * \(i) = \(dan*i)")
+    }
+}
+
+gugu(dan: 3)
+
+
+func makeAll(){
+// gugu() 함수를 1~9단까지 호출하세요
+    for i in 1...9{
+        gugu(dan: i)
+    }
+}
+
+makeAll()
+
+func makeGugu(maxDan : Int) {
+// 1단부터 maxDan까지 값에 1 ~ 9까지 곱해서 출력하세요
+    for i in 1...maxDan{
+        gugu(dan: i)
+    }
+}
+
+
+// while
+
+let finalSquare = 25
+var board = [Int](repeating: 0, count: finalSquare + 1)
+
+board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+
+var square = 0
+var diceRoll = 0
+while square < finalSquare {
+    // roll the dice
+    diceRoll += 1
+    if diceRoll == 7 { diceRoll = 1 }
+    // move by the rolled amount
+    square += diceRoll
+    if square < board.count {
+        // if we're still on the board, move up or down for a snake or a ladder
+        square += board[square]
+    }
+}
+print("Game over!")
+
+
+
