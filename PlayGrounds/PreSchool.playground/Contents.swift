@@ -270,11 +270,11 @@ let vga = Resolution(width: 640, height: 480)
 
 struct Rectangle {
     
-    var leftTopX: Int
-    var leftTopY: Int
+    var leftTopX: Float
+    var leftTopY: Float
     
-    var rightBottomX: Int
-    var rightBottomY: Int
+    var rightBottomX: Float
+    var rightBottomY: Float
     
     func printRect() {
         print(" A  ( X : \(self.leftTopX), Y : \(self.leftTopY) ) ")
@@ -282,6 +282,17 @@ struct Rectangle {
         print(" C  ( X : \(self.leftTopX), Y : \(self.rightBottomY) ) ")
         print(" D  ( X : \(self.rightBottomX), Y : \(self.rightBottomY) ) ")
         
+    }
+    
+    func printArea() {
+        let area = ( self.rightBottomX - self.leftTopX ) * (self.leftTopY - self.rightBottomY)
+        print("사각형의 면적 : \(area)")
+    }
+    
+    func printCenter() {
+        let centerX = ( self.rightBottomX + self.leftTopX ) / 2
+        let centerY = (self.leftTopY + self.rightBottomY) / 2
+        print("중점 X : \(centerX) Y : \(centerY)")
     }
     
 }
@@ -295,6 +306,9 @@ struct Rectangle {
 //printRect() 메서드를 호출해서 꼭지점 좌표를 출력하세요.
 
 
+
+
+
 let rect = Rectangle(leftTopX: 5, leftTopY: 11, rightBottomX: 15, rightBottomY: 4)
 rect.printRect()
 
@@ -304,3 +318,375 @@ rect.printRect()
 //사각형의 면적을 계산해서 출력하는 printArea() 메서드를 추가하세요.
 //
 //아래에서 printArea() 메서드를 호출하세요.
+
+rect.printArea()
+
+
+//미션4. Float형
+//사각형 좌표를 Float 형으로 바꿔보세요.
+//
+//printRect() 메서드를 호출하세요.
+
+
+let rect2 = Rectangle(leftTopX: 4.5, leftTopY: 10.5, rightBottomX: 15, rightBottomY: 3.5)
+rect2.printRect()
+
+
+
+//미션5. center
+//사각형의 중점(center)를 계산해서 float 형으로 출력하는 printCenter() 메서드를 추가하세요.
+//
+//아래에서 printCenter() 메서드를 호출하세요.
+
+
+rect2.printCenter()
+
+
+
+
+// 연습문제 2
+
+
+//미션1. MyPoint
+//MyPoint struct를 만들어보세요.
+//
+//Float 형 myX, myY 변수를 추가하세요.
+//
+//(x,y)형태로 좌표를 출력하는 printPoint() 메서드를 만드세요.
+//
+//MyPoint struct 인스턴스를 pointA로 선언하고
+//
+//초기화 메서드로 (2.5f,15.8f)값을 넘기고
+//
+//printPoint()를 호출해서 좌표를 출력하세요.
+
+struct MyPoint{
+    
+    var myX: Float
+    var myY: Float
+    
+    func printPoint() {
+        print("(\(self.myX),\(self.myY))")
+    }
+    
+    mutating func setX(x: Float){
+        self.myX = x
+    }
+    
+    mutating func setY(y: Float){
+        self.myY = y
+    }
+    
+    
+    // 다른 점과의 거리를 계산
+    // sqrt(Float) -> 제곱근 구해주는 함수
+    
+    func getDistanceTo(toPoint: MyPoint) -> Float {
+        let x = toPoint.myX - self.myX
+        let y = toPoint.myY - self.myY
+        
+        let distance = sqrt(pow(x,2) + pow(y, 2))
+        return distance
+        
+    }
+    
+}
+
+var pointA = MyPoint(myX: 2.5, myY: 15.8)
+pointA.printPoint()
+
+
+//미션2. 메소드 추가하기
+//setX(x : Float) 메서드와 setY(y: Float) 메서드를 추가하세요.
+//
+//setX는 myX값을 x로 바꾸고, setY는 myY값을 y로 바꾸세요.
+//
+//setX(x:15.2)와 setY(y:7.4)를 호출하세요.
+//
+//직접 print(“pointA=( )”) 형태로 x와 y 값을 가져와서 출력하세요.
+
+pointA.setX(x: 15.2)
+pointA.setY(y: 7.4)
+
+print("pointA = (\(pointA.myX),\(pointA.myY))")
+
+var pointB = MyPoint(myX: 15, myY: 12.2)
+pointA.getDistanceTo(toPoint: pointB)
+
+
+
+
+// 연습문제 3
+
+//미션1. MyPoint로 바꾸기
+//이전에 만든 Rectangle struct를 MyPoint 구조체를 사용하도록 개선해봅시다.
+//
+//Float leftTop-X, -Y 대신 MyPoint leftTop으로
+//
+//Float rightBottom-X, -Y 대신 MyPoint rightBottom 으로 대체하고
+//
+//기본 생성자에서 각 좌표의 초기값을 (0,0) 으로 설정하세요.
+//
+//rect 테스트했던 메서드를 그대로 실행해보세요.
+//
+//안되는 부분을 수정해보세요.
+
+
+
+struct PointRectangle {
+    
+//    var leftTopX: Float
+//    var leftTopY: Float
+    var leftTop: MyPoint
+    
+//    var rightBottomX: Float
+//    var rightBottomY: Float
+    var rightBottom: MyPoint
+    
+    var width: Float {
+        self.rightBottom.myX - self.leftTop.myX
+    }
+    
+    var height: Float {
+        self.leftTop.myY - self.rightBottom.myY
+    }
+    
+    
+    init() {
+        self.leftTop = MyPoint(myX: 0, myY: 0)
+        self.rightBottom = MyPoint(myX: 0, myY: 0)
+    }
+    
+    init(point: MyPoint, width: Float, height: Float){
+        
+        leftTop = MyPoint(myX: point.myX, myY: point.myY)
+        rightBottom = MyPoint(myX: point.myX + width, myY: point.myY - height)
+        
+        
+    }
+    
+    func printRect() {
+        print(" A  ( X : \(self.leftTop.myX), Y : \(self.leftTop.myY) ) ")
+        print(" B  ( X : \(self.rightBottom.myX), Y : \(self.leftTop.myY) ) ")
+        print(" C  ( X : \(self.leftTop.myX), Y : \(self.rightBottom.myY) ) ")
+        print(" D  ( X : \(self.rightBottom.myX), Y : \(self.rightBottom.myY) ) ")
+        
+    }
+    
+    func printArea() {
+        let area = width * height
+        print("사각형의 면적 : \(area)")
+    }
+    
+    func printCenter() {
+        let centerX = ( self.rightBottom.myX + self.leftTop.myX ) / 2
+        let centerY = (self.leftTop.myY + self.rightBottom.myY) / 2
+        print("중점 X : \(centerX) Y : \(centerY)")
+    }
+    
+    // 원하는 delta 값만큼 이동하는 메소드
+    mutating func moveTo(delta: MyPoint){
+        leftTop.setX(x: leftTop.myX + delta.myX)
+        leftTop.setY(y: leftTop.myY + delta.myY)
+        
+        rightBottom.setX(x: rightBottom.myX + delta.myX)
+        rightBottom.setY(y: rightBottom.myY + delta.myY)
+        
+    }
+    
+}
+
+
+let rect3 = PointRectangle()
+rect3.printRect()
+rect3.printCenter()
+rect3.printArea()
+
+
+
+//
+//미션2. printPoints() 구현하기
+//추가 생성자로 MyPoint형 원점(x,y) 좌표와
+//길이 Float width 와 높이 Float height 를 넘겨
+//사각형을 만드는 메서드를 만드세요.
+//
+//원점에 해당하는 MyPoint 인스턴스 (5,5)를 추가하고
+//추가 생성자에 길이는 5f, 10f 넘겨 새로운 사각형 rectB 객체를 생성하세요.
+//
+//rectB.printPoint()를 호출해서 좌표를 출력하세요.
+
+
+let point2 = MyPoint(myX: 5, myY: 5)
+var rectB = PointRectangle(point: point2, width: 5, height: 10)
+rectB.printRect()
+
+
+
+//미션3. moveTo() 구현하기
+//이전에 만든 Rectangle 클래스에 원하는 delta 값만큼 위치 이동하는 moveTo(delta: MyPoint)메서드를 추가하세요.
+//
+//rectB.moveTo(delta: (-3f, 1.5f)) 메서드를 호출하고 이동한 사각형 좌표를 printRect()로 확인하세요.
+
+rectB.moveTo(delta: MyPoint(myX: -3, myY: 1.5))
+rectB.printRect()
+
+
+
+
+// 프로그램 흐름 제어하기
+
+// 연습문제
+// point를 넘기면 학점 “A”, “B”, “C”, “D”, “F”을 리턴하세요.
+
+func whatIsGrade(point: Int) -> Character {
+    
+    if point >= 90 {
+        return "A"
+    }
+    else if point >= 80 {
+        return "B"
+    }
+    else if point >= 70 {
+        return "C"
+    }
+    else if point >= 60{
+        return "D"
+    }
+    else {
+        return "F"
+    }
+    
+}
+
+
+// switch - case
+
+let someCharacter: Character = "z"
+switch someCharacter {
+case "a":
+    print("The first letter of the alphabet")
+case "z":
+    print("The last letter of the alphabet")
+default:
+    print("Some other character")
+}
+// Prints "The last letter of the alphabet"
+
+let approximateCount = 62
+let countedThings = "moons orbiting Saturn"
+var naturalCount: String
+switch approximateCount {
+case 0:
+    naturalCount = "no"
+case 1..<5:
+    naturalCount = "a few"
+case 5..<12:
+    naturalCount = "several"
+case 12..<100:
+    naturalCount = "dozens of"
+case 100..<1000:
+    naturalCount = "hundreds of"
+default:
+    naturalCount = "many"
+}
+print("There are \(naturalCount) \(countedThings).")
+// Prints "There are dozens of moons orbiting Saturn."
+
+let somePoint = (1, 1)
+switch somePoint {
+case (0, 0):
+    print("(0, 0) is at the origin")
+case (_, 0):
+    print("(\(somePoint.0), 0) is on the x-axis")
+case (0, _):
+    print("(0, \(somePoint.1)) is on the y-axis")
+case (-2...2, -2...2):
+    print("(\(somePoint.0), \(somePoint.1)) is inside the box")
+default:
+    print("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+}
+// Prints "(1, 1) is inside the box"
+
+
+// 반복작업 for
+
+for index in 1...5 {
+    print("\(index) 곱하기 5 는 \(index * 5)")
+}
+
+
+let base = 3
+let power = 10
+var answer = 1
+for _ in 1...power {
+    answer *= base
+}
+print("\(base) to the power of \(power) is \(answer)")
+// Prints "3 to the power of 10 is 59049"
+
+let names = ["Honux", "JK", "Crong", "Anonymous"]
+for name in names {
+    print("Hello, master \(name)!")
+}
+//Hello, master Honux!
+//Hello, master JK!
+//Hello, master Crong!
+//Hello, master Anonymous!
+
+
+// 연습문제
+// 구구단 함수를 반복문을 활용해서 만들어보세요
+
+func gugu(dan: Int) {
+    // dan 값에 1 ~ 9 까지 곱해서 출력하세요
+    
+    for i in 1...9{
+        print("\(dan) * \(i) = \(dan*i)")
+    }
+}
+
+gugu(dan: 3)
+
+
+func makeAll(){
+// gugu() 함수를 1~9단까지 호출하세요
+    for i in 1...9{
+        gugu(dan: i)
+    }
+}
+
+makeAll()
+
+func makeGugu(maxDan : Int) {
+// 1단부터 maxDan까지 값에 1 ~ 9까지 곱해서 출력하세요
+    for i in 1...maxDan{
+        gugu(dan: i)
+    }
+}
+
+
+// while
+
+let finalSquare = 25
+var board = [Int](repeating: 0, count: finalSquare + 1)
+
+board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+
+var square = 0
+var diceRoll = 0
+while square < finalSquare {
+    // roll the dice
+    diceRoll += 1
+    if diceRoll == 7 { diceRoll = 1 }
+    // move by the rolled amount
+    square += diceRoll
+    if square < board.count {
+        // if we're still on the board, move up or down for a snake or a ladder
+        square += board[square]
+    }
+}
+print("Game over!")
+
+
+
