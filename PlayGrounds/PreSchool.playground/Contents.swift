@@ -270,11 +270,11 @@ let vga = Resolution(width: 640, height: 480)
 
 struct Rectangle {
     
-    var leftTopX: Int
-    var leftTopY: Int
+    var leftTopX: Float
+    var leftTopY: Float
     
-    var rightBottomX: Int
-    var rightBottomY: Int
+    var rightBottomX: Float
+    var rightBottomY: Float
     
     func printRect() {
         print(" A  ( X : \(self.leftTopX), Y : \(self.leftTopY) ) ")
@@ -282,6 +282,17 @@ struct Rectangle {
         print(" C  ( X : \(self.leftTopX), Y : \(self.rightBottomY) ) ")
         print(" D  ( X : \(self.rightBottomX), Y : \(self.rightBottomY) ) ")
         
+    }
+    
+    func printArea() {
+        let area = ( self.rightBottomX - self.leftTopX ) * (self.leftTopY - self.rightBottomY)
+        print("사각형의 면적 : \(area)")
+    }
+    
+    func printCenter() {
+        let centerX = ( self.rightBottomX + self.leftTopX ) / 2
+        let centerY = (self.leftTopY + self.rightBottomY) / 2
+        print("중점 X : \(centerX) Y : \(centerY)")
     }
     
 }
@@ -295,6 +306,9 @@ struct Rectangle {
 //printRect() 메서드를 호출해서 꼭지점 좌표를 출력하세요.
 
 
+
+
+
 let rect = Rectangle(leftTopX: 5, leftTopY: 11, rightBottomX: 15, rightBottomY: 4)
 rect.printRect()
 
@@ -304,3 +318,27 @@ rect.printRect()
 //사각형의 면적을 계산해서 출력하는 printArea() 메서드를 추가하세요.
 //
 //아래에서 printArea() 메서드를 호출하세요.
+
+rect.printArea()
+
+
+//미션4. Float형
+//사각형 좌표를 Float 형으로 바꿔보세요.
+//
+//printRect() 메서드를 호출하세요.
+
+
+let rect2 = Rectangle(leftTopX: 4.5, leftTopY: 10.5, rightBottomX: 15, rightBottomY: 3.5)
+rect2.printRect()
+
+
+
+//미션5. center
+//사각형의 중점(center)를 계산해서 float 형으로 출력하는 printCenter() 메서드를 추가하세요.
+//
+//아래에서 printCenter() 메서드를 호출하세요.
+
+
+rect2.printCenter()
+
+
